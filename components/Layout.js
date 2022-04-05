@@ -1,6 +1,5 @@
-import { AppBar, Container, Toolbar, Typography } from '@material-ui/core';
+import { AppBar, Container, Link, Toolbar, Typography } from '@material-ui/core';
 import Head from 'next/head';
-import Link from 'next/link';
 import NextLink from 'next/link';
 import React from 'react';
 
