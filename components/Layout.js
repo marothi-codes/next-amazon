@@ -5,12 +5,13 @@ import React from 'react';
 
 import useStyles from '../utils/styles';
 
-function Layout({ children }) {
+function Layout({ title, description, children }) {
   const classes = useStyles();
   return (
     <div>
       <Head>
-        <title>Next Amazon</title>
+        <title>{title ? `${title} - Next Amazon` : 'Next Amazon'}</title>
+        {description && <meta name="description" content={description} />}
       </Head>
       <AppBar className={classes.navbar} position="static">
         <Toolbar>
