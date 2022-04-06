@@ -37,10 +37,10 @@ function Layout({ title, description, children }) {
     palette: {
       type: darkMode ? 'dark' : 'light',
       primary: {
-        main: '#e47911',
+        main: '#FFD814',
       },
       secondary: {
-        main: '#cccccc',
+        main: '#FFA41C',
       },
     },
   });

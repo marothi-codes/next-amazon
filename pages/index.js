@@ -37,7 +37,7 @@ function Home() {
                 </NextLink>
                 <CardActions>
                   <Typography>R{product.price}</Typography>
-                  <Button size="small" color="primary">
+                  <Button size="small" color="secondary">
                     Add to Basket
                   </Button>
                 </CardActions>

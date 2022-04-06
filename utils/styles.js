@@ -2,7 +2,7 @@ import { makeStyles } from '@material-ui/core';
 
 const useStyles = makeStyles({
   navbar: {
-    backgroundColor: '#232f3e',
+    backgroundColor: '#131A22',
     '& a': {
       color: '#fff',
       marginLeft: 10,
@@ -19,7 +19,11 @@ const useStyles = makeStyles({
     minHeight: '80vh',
   },
   footer: {
+    backgroundColor: '#232F3E',
+    color: '#FFFFFF',
     marginTop: 10,
+    minHeight: '4rem',
+    padding: '1rem',
     textAlign: 'center',
   },
   section: {

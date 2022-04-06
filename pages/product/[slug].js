@@ -19,7 +19,7 @@ function ProductScreen() {
     <Layout title={product.name} description={product.description}>
       <div className={classes.section}>
         <NextLink href="/" passHref>
-          <Link>
+          <Link color="secondary">
             <Typography>back to products</Typography>
           </Link>
         </NextLink>
