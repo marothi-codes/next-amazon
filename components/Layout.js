@@ -4,17 +4,23 @@ import {
   createTheme,
   CssBaseline,
   Link,
+  Switch,
   ThemeProvider,
   Toolbar,
-  Typography,
 } from '@material-ui/core';
 import Head from 'next/head';
+import Image from 'next/image';
 import NextLink from 'next/link';
-import React from 'react';
+import React, { useContext } from 'react';
+import Cookies from 'js-cookie';
+import { Store } from '../utils/Store';
 
 import useStyles from '../utils/styles';
 
 function Layout({ title, description, children }) {
+  const { state, dispatch } = useContext(Store);
+  const { darkMode } = state;
+
   const theme = createTheme({
     typography: {
       h1: {
@@ -29,7 +35,7 @@ function Layout({ title, description, children }) {
       },
     },
     palette: {
-      type: 'light',
+      type: darkMode ? 'dark' : 'light',
       primary: {
         main: '#e47911',
       },
@@ -38,7 +44,15 @@ function Layout({ title, description, children }) {
       },
     },
   });
+
   const classes = useStyles();
+
+  const handleDarkModeToggle = () => {
+    dispatch({ type: darkMode ? 'DARK_MODE_OFF' : 'DARK_MODE_ON' });
+    const colorMode = !darkMode;
+    Cookies.set('darkMode', colorMode ? 'ON' : 'OFF');
+  };
+
   return (
     <div>
       <Head>
@@ -51,11 +65,15 @@ function Layout({ title, description, children }) {
           <Toolbar>
             <NextLink href="/" passHref>
               <Link>
-                <Typography className={classes.brand}>amazon</Typography>
+                <Image src="/images/brand.png" alt="logo" width="110" height="33"></Image>
               </Link>
             </NextLink>
 
             <div className={classes.grow}></div>
+
+            <div>
+              <Switch checked={darkMode} onChange={() => handleDarkModeToggle()}></Switch>
+            </div>
 
             <div>
               <NextLink href="/cart" passHref>
