@@ -1,5 +1,6 @@
 import React, { useContext } from 'react';
 import NextLink from 'next/link';
+import { useRouter } from 'next/router';
 import Layout from '../../components/Layout';
 import { Button, Card, Grid, Link, List, ListItem, Typography } from '@material-ui/core';
 import Product from '../../models/Product';
@@ -11,6 +12,7 @@ import useStyles from '../../utils/styles';
 
 function ProductScreen({ product }) {
   const { dispatch } = useContext(Store);
+  const router = useRouter();
   const classes = useStyles();
 
   if (!product) return <div>Product Not Found</div>;
@@ -23,6 +25,7 @@ function ProductScreen({ product }) {
       return;
     }
     dispatch({ type: 'CART_ADD_ITEM', payload: { ...product, quantity: 1 } });
+    router.push('/cart');
   };
 
   return (
