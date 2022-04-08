@@ -1,4 +1,5 @@
 import React, { useContext } from 'react';
+import dynamic from 'next/dynamic';
 import Image from 'next/image';
 import NextLink from 'next/link';
 import { Store } from '../utils/Store';
@@ -19,14 +20,28 @@ import {
   TableRow,
   Typography,
 } from '@material-ui/core';
+import axios from 'axios';
 import Layout from '../components/Layout';
-import dynamic from 'next/dynamic';
 
 function CartScreen() {
-  const { state } = useContext(Store);
+  const { state, dispatch } = useContext(Store);
   const {
     cart: { cartItems },
   } = state;
+
+  const handleCartUpdate = async (item, quantity) => {
+    const { data } = await axios.get(`/api/products/${item._id}`);
+
+    if (data.countInStock < quantity) {
+      window.alert('This item is out of stock. Sorry.');
+      return;
+    }
+    dispatch({ type: 'CART_ADD_ITEM', payload: { ...item, quantity } });
+  };
+
+  const handleRemoveFromCart = (item) => {
+    dispatch({ type: 'CART_REMOVE_ITEM', payload: { ...item } });
+  };
 
   return (
     <Layout title="Shopping Cart">
@@ -35,7 +50,10 @@ function CartScreen() {
       </Typography>
       {cartItems.length === 0 ? (
         <div>
-          Cart is empty. <NextLink href="/">Go Shopping</NextLink>
+          Cart is empty.{' '}
+          <NextLink href="/" passHref>
+            <Link>Go shopping</Link>
+          </NextLink>
         </div>
       ) : (
         <Grid container spacing={1}>
@@ -72,7 +90,9 @@ function CartScreen() {
                       </TableCell>
 
                       <TableCell align="right">
-                        <Select value={x.quantity}>
+                        <Select
+                          value={x.quantity}
+                          onChange={(e) => handleCartUpdate(x, e.target.value)}>
                           {[...Array(x.countInStock).keys()].map((x) => (
                             <MenuItem key={x + 1} value={x + 1}>
                               {x + 1}
@@ -84,7 +104,10 @@ function CartScreen() {
                       <TableCell align="right">R{x.price}</TableCell>
 
                       <TableCell align="right">
-                        <Button variant="contained" color="secondary">
+                        <Button
+                          variant="contained"
+                          color="secondary"
+                          onClick={() => handleRemoveFromCart(x)}>
                           x
                         </Button>
                       </TableCell>

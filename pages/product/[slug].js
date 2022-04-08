@@ -11,20 +11,23 @@ import { Store } from '../../utils/Store';
 import useStyles from '../../utils/styles';
 
 function ProductScreen({ product }) {
-  const { dispatch } = useContext(Store);
+  const { dispatch, state } = useContext(Store);
   const router = useRouter();
   const classes = useStyles();
 
   if (!product) return <div>Product Not Found</div>;
 
-  const addToCartHandler = async () => {
+  const handleAddToCart = async () => {
+    const existingItem = state.cart.cartItems.find((x) => x._id === product._id);
+    const quantity = existingItem ? existingItem.quantity + 1 : 1;
     const { data } = await axios.get(`/api/products/${product._id}`);
 
-    if (data.countInStock <= 0) {
-      window.alert('This product is out of stock.');
+    if (data.countInStock < quantity) {
+      window.alert('This item is out of stock. Sorry.');
       return;
     }
-    dispatch({ type: 'CART_ADD_ITEM', payload: { ...product, quantity: 1 } });
+
+    dispatch({ type: 'CART_ADD_ITEM', payload: { ...product, quantity } });
     router.push('/cart');
   };
 
@@ -100,7 +103,7 @@ function ProductScreen({ product }) {
                   fullWidth
                   variant="contained"
                   color="primary"
-                  onClick={() => addToCartHandler()}>
+                  onClick={() => handleAddToCart()}>
                   Add to cart
                 </Button>
               </ListItem>
