@@ -1,16 +1,29 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import NextLink from 'next/link';
 import Layout from '../../components/Layout';
 import { Button, Card, Grid, Link, List, ListItem, Typography } from '@material-ui/core';
 import Product from '../../models/Product';
 import db from '../../utils/db';
 import Image from 'next/image';
+import axios from 'axios';
+import { Store } from '../../utils/Store';
 import useStyles from '../../utils/styles';
 
 function ProductScreen({ product }) {
+  const { dispatch } = useContext(Store);
   const classes = useStyles();
 
   if (!product) return <div>Product Not Found</div>;
+
+  const addToCartHandler = async () => {
+    const { data } = await axios.get(`/api/products/${product._id}`);
+
+    if (data.countInStock <= 0) {
+      window.alert('This product is out of stock.');
+      return;
+    }
+    dispatch({ type: 'CART_ADD_ITEM', payload: { ...product, quantity: 1 } });
+  };
 
   return (
     <Layout title={product.name} description={product.description}>
@@ -80,7 +93,11 @@ function ProductScreen({ product }) {
                 </Grid>
               </ListItem>
               <ListItem>
-                <Button fullWidth variant="contained" color="primary">
+                <Button
+                  fullWidth
+                  variant="contained"
+                  color="primary"
+                  onClick={() => addToCartHandler()}>
                   Add to cart
                 </Button>
               </ListItem>
