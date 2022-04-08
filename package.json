@@ -1,6 +1,6 @@
 {
   "name": "next-amazon",
-  "version": "0.4.0",
+  "version": "0.5.0",
   "private": true,
   "scripts": {
     "dev": "next dev",
@@ -13,6 +13,7 @@
     "js-cookie": "^2.2.1",
     "mongoose": "^5.13.14",
     "next": "12.1.0",
+    "next-connect": "^0.10.1",
     "react": "17.0.2",
     "react-dom": "17.0.2"
   },
