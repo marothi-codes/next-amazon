@@ -75,7 +75,7 @@ function Login() {
           </ListItem>
           <ListItem>
             Don&apos;t have an account? &nbsp;
-            <NextLink href="/register" passHref>
+            <NextLink href={`/register?redirect=${redirect || '/'}`} passHref>
               <Link>Register</Link>
             </NextLink>
           </ListItem>
