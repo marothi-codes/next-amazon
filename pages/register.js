@@ -32,7 +32,7 @@ function Register() {
       return; // Terminate the function.
     }
     try {
-      const { data } = await axios.get('/api/users/register', {
+      const { data } = await axios.post('/api/users/register', {
         name,
         email,
         password,
