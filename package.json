@@ -1,6 +1,6 @@
 {
   "name": "next-amazon",
-  "version": "0.6.1",
+  "version": "0.7.0",
   "private": true,
   "scripts": {
     "dev": "next dev",
@@ -17,8 +17,10 @@
     "mongoose": "^5.13.14",
     "next": "12.1.0",
     "next-connect": "^0.10.1",
+    "notistack": "^1.0.9",
     "react": "17.0.2",
-    "react-dom": "17.0.2"
+    "react-dom": "17.0.2",
+    "react-hook-form": "^7.11.1"
   },
   "devDependencies": {
     "eslint": "8.10.0",
