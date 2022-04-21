@@ -6,6 +6,7 @@ export const Store = createContext();
 const initialState = {
   cart: {
     cartItems: Cookies.get('cartItems') ? JSON.parse(Cookies.get('cartItems')) : [],
+    paymentMethod: Cookies.get('paymentMethod') ? Cookies.get('paymentMethod') : '',
     shippingAddress: Cookies.get('shippingAddress')
       ? JSON.parse(Cookies.get('shippingAddress'))
       : {},
