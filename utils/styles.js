@@ -1,6 +1,9 @@
 import { makeStyles } from '@material-ui/core';
 
 const useStyles = makeStyles({
+  root: {
+    backgroundColor: '#7B6054',
+  },
   navbar: {
     backgroundColor: '#131A22',
     '& a': {
@@ -37,6 +40,9 @@ const useStyles = makeStyles({
   navbarButton: {
     color: '#fff',
     textTransform: 'initial',
+  },
+  transparentBackground: {
+    backgroundColor: 'transparent',
   },
 });
 
