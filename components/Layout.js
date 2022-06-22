@@ -16,7 +16,7 @@ import Head from 'next/head';
 import Image from 'next/image';
 import NextLink from 'next/link';
 import { useRouter } from 'next/router';
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import Cookies from 'js-cookie';
 import { Store } from '../utils/Store';
 import useStyles from '../utils/styles';
@@ -76,6 +76,11 @@ function Layout({ title, description, children }) {
     router.push('/');
   };
 
+  useEffect(() => {
+    const colorMode = Cookies.get('darkMode');
+    dispatch({ type:colorMode === 'OFF' ? 'DARK_MODE_OFF' : 'DARK_MODE_ON'  });
+  }, [dispatch]);
+
   return (
     <div>
       <Head>
@@ -95,7 +100,7 @@ function Layout({ title, description, children }) {
             <div className={classes.grow}></div>
 
             <div>
-              <Switch checked={darkMode} onChange={() => handleDarkModeToggle()}></Switch>
+              <Switch checked={darkMode} onChange={handleDarkModeToggle}></Switch>
             </div>
 
             <div>
@@ -116,7 +121,8 @@ function Layout({ title, description, children }) {
                     aria-controls="simple-menu"
                     aria-haspopup="true"
                     className={classes.navbarButton}
-                    onClick={(e) => handleLoginClick(e)}>
+                    onClick={(e) => handleLoginClick(e)}
+                  >
                     {userInfo.name}
                   </Button>
                   <Menu
@@ -124,7 +130,8 @@ function Layout({ title, description, children }) {
                     anchorEl={anchorEl}
                     keepMounted
                     open={Boolean(anchorEl)}
-                    onClose={() => handleLoginMenuClose()}>
+                    onClose={() => handleLoginMenuClose()}
+                  >
                     <MenuItem onClick={() => handleLoginMenuClose()}>Profile</MenuItem>
                     <MenuItem onClick={() => handleLoginMenuClose()}>My Account</MenuItem>
                     <MenuItem onClick={() => handleLogoutClick()}>Logout</MenuItem>
